@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WanderSoul - Personality-Based Travel Planner</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-overlay"></div>
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1 class="logo">WanderSoul</h1>
+                <p class="tagline">Travel by Personality</p>
+            </div>
+            <div class="nav-links">
+                <a href="#discover" class="nav-link">Discover</a>
+                <a href="#personality" class="nav-link">Personality Quiz</a>
+                <a href="#my-trips" class="nav-link" onclick="showMyTrips()">My Trips</a>
+            </div>
+        </nav>
+        
+        <div class="hero-content">
+            <h2 class="hero-title">Discover Your Perfect Destination</h2>
+            <p class="hero-subtitle">Let your personality guide your next adventure</p>
+            <button class="cta-button" onclick="scrollToPersonality()">
+                Start Your Journey
+                <span class="arrow">→</span>
+            </button>
+        </div>
+        
+        <div class="scroll-indicator">
+            <div class="mouse"></div>
+        </div>
+    </header>
+
+    <!-- Personality Quiz Section -->
+    <section id="personality" class="personality-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Step 1</span>
+                <h2 class="section-title">Tell Us About Your Travel Personality</h2>
+                <p class="section-description">Answer a few questions to get personalized recommendations</p>
+            </div>
+
+            <div class="personality-quiz">
+                <div class="quiz-card">
+                    <div class="quiz-icon">👥</div>
+                    <h3>Crowd Preference</h3>
+                    <p>How do you feel about crowds?</p>
+                    <div class="option-group">
+                        <label class="option-label">
+                            <input type="radio" name="crowd" value="quiet" checked>
+                            <span class="option-content">
+                                <span class="option-title">Quiet & Peaceful</span>
+                                <span class="option-desc">I prefer serene, less crowded places</span>
+                            </span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="crowd" value="moderate">
+                            <span class="option-content">
+                                <span class="option-title">Moderate</span>
+                                <span class="option-desc">Some activity is nice</span>
+                            </span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="crowd" value="lively">
+                            <span class="option-content">
+                                <span class="option-title">Lively & Bustling</span>
+                                <span class="option-desc">I love vibrant, crowded places</span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="quiz-card">
+                    <div class="quiz-icon">⚡</div>
+                    <h3>Activity Level</h3>
+                    <p>What's your ideal pace?</p>
+                    <div class="option-group">
+                        <label class="option-label">
+                            <input type="radio" name="activity" value="relaxed" checked>
+                            <span class="option-content">
+                                <span class="option-title">Relaxed & Chill</span>
+                                <span class="option-desc">Lounging, cafés, slow exploration</span>
+                            </span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="activity" value="balanced">
+                            <span class="option-content">
+                                <span class="option-title">Balanced</span>
+                                <span class="option-desc">Mix of activity and rest</span>
+                            </span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="activity" value="adventurous">
+                            <span class="option-content">
+                                <span class="option-title">Adventurous & Active</span>
+                                <span class="option-desc">Hiking, sports, constant movement</span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="quiz-card">
+                    <div class="quiz-icon">📍</div>
+                    <h3>Distance Preference</h3>
+                    <p>How far do you want to travel?</p>
+                    <div class="option-group">
+                        <label class="option-label">
+                            <input type="radio" name="distance" value="nearby" checked>
+                            <span class="option-content">
+                                <span class="option-title">Nearby</span>
+                                <span class="option-desc">Within 50 km</span>
+                            </span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="distance" value="moderate">
+                            <span class="option-content">
+                                <span class="option-title">Moderate</span>
+                                <span class="option-desc">50-200 km away</span>
+                            </span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="distance" value="far">
+                            <span class="option-content">
+                                <span class="option-title">Far Away</span>
+                                <span class="option-desc">200+ km adventure</span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="quiz-card">
+                    <div class="quiz-icon">🎯</div>
+                    <h3>Interests</h3>
+                    <p>What excites you most?</p>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="nature" checked>
+                            <span>🌿 Nature & Outdoors</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="culture" checked>
+                            <span>🏛️ Culture & History</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="budget">
+                            <span>💰 Budget-Friendly Options</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="location-section">
+                <h3>Your Location</h3>
+                <p>We'll use this to find destinations near you</p>
+                <div class="location-input-group">
+                    <input type="number" id="latitude" placeholder="Latitude" step="0.0001" value="10.5276">
+                    <input type="number" id="longitude" placeholder="Longitude" step="0.0001" value="76.2144">
+                    <button class="btn-location" onclick="getCurrentLocation()">
+                        📍 Use My Location
+                    </button>
+                </div>
+            </div>
+
+            <button class="btn-primary" onclick="getRecommendations()">
+                Get Personalized Recommendations
+                <span class="btn-glow"></span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Loading State -->
+    <div id="loading" class="loading-overlay" style="display: none;">
+        <div class="loading-content">
+            <div class="compass-loader"></div>
+            <p>Finding your perfect destinations...</p>
+        </div>
+    </div>
+
+    <!-- Results Section -->
+    <section id="results" class="results-section" style="display: none;">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Your Matches</span>
+                <h2 class="section-title">Destinations Matched to Your Personality</h2>
+                <div id="personality-summary" class="personality-summary"></div>
+            </div>
+
+            <div class="results-grid" id="resultsGrid">
+                <!-- Results will be dynamically inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section id="map-section" class="map-section" style="display: none;">
+        <div class="container">
+            <h2 class="section-title">Explore on Map</h2>
+            <div id="map" class="map-container"></div>
+        </div>
+    </section>
+
+    <!-- Modal for Destination Details -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modalContent">
+                <!-- Destination details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- My Trips Section -->
+    <div id="myTripsSection" class="my-trips-section" style="display: none;">
+        <div class="container">
+            <div class="trips-header">
+                <h2>My Saved Trips</h2>
+                <button class="btn-close" onclick="closeMyTrips()">✕</button>
+            </div>
+            <div id="tripsList" class="trips-grid">
+                <!-- Trips will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 WanderSoul. Discover destinations that match your soul.</p>
+            <p class="footer-note">Powered by OpenTripMap & Leaflet Maps</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="/static/js/script.js"></script>
+</body>
+</html>
